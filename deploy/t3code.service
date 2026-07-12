@@ -1,0 +1,26 @@
+[Unit]
+Description=T3 Code headless ARM server
+After=network-online.target tailscaled.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=musse
+Group=musse
+WorkingDirectory=/home/musse
+Environment=HOME=/home/musse
+Environment=T3CODE_HOME=/home/musse/.t3
+Environment=T3CODE_HOST=100.112.252.123
+Environment=T3CODE_PORT=3773
+Environment=T3CODE_MODE=web
+Environment=T3CODE_NO_BROWSER=true
+ExecStart=/home/musse/.local/bin/t3arm serve
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=20s
+KillSignal=SIGTERM
+NoNewPrivileges=false
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
